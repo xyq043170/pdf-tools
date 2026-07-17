@@ -318,6 +318,207 @@ footer a {
   padding: 0 5px;
 }
 
+/* Tool matrix visual system -------------------------------------------------
+   Mirrors the host application's blue/cyan palette and glass surfaces while
+   keeping BentoPDF's existing utility-based markup and behavior intact. */
+:root {
+  --matrix-background: #020817;
+  --matrix-foreground: #f8fafc;
+  --matrix-card: rgba(7, 20, 45, 0.82);
+  --matrix-card-solid: #07142d;
+  --matrix-muted: #17233c;
+  --matrix-muted-foreground: #94a3b8;
+  --matrix-border: rgba(96, 165, 250, 0.2);
+  --matrix-primary: #3b82f6;
+  --matrix-primary-hover: #2563eb;
+  --matrix-secondary: #22d3ee;
+  --matrix-ring: rgba(59, 130, 246, 0.3);
+  --matrix-shadow: 0 18px 48px -28px rgba(37, 99, 235, 0.55);
+}
+
+:root[data-theme='light'] {
+  --matrix-background: #f8fafc;
+  --matrix-foreground: #0f172a;
+  --matrix-card: rgba(255, 255, 255, 0.86);
+  --matrix-card-solid: #ffffff;
+  --matrix-muted: #f1f5f9;
+  --matrix-muted-foreground: #64748b;
+  --matrix-border: rgba(37, 99, 235, 0.16);
+  --matrix-primary: #2563eb;
+  --matrix-primary-hover: #1d4ed8;
+  --matrix-secondary: #0891b2;
+  --matrix-ring: rgba(37, 99, 235, 0.2);
+  --matrix-shadow: 0 18px 50px -32px rgba(15, 23, 42, 0.32);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 18% 0%,
+      color-mix(in srgb, var(--matrix-primary) 13%, transparent),
+      transparent 34rem
+    ),
+    radial-gradient(
+      circle at 82% 100%,
+      color-mix(in srgb, var(--matrix-secondary) 10%, transparent),
+      transparent 30rem
+    ),
+    var(--matrix-background);
+  color: var(--matrix-foreground);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.tool-matrix-embedded nav,
+.tool-matrix-embedded footer {
+  display: none !important;
+}
+
+.tool-matrix-embedded body > .container,
+.tool-matrix-embedded #app {
+  padding-top: 1.25rem !important;
+  padding-bottom: 1.25rem !important;
+}
+
+.tool-card,
+#tool-interface,
+.pdf-panel,
+.bg-gray-800,
+.bg-gray-800\/50,
+.bg-gray-800\/60 {
+  background-color: var(--matrix-card) !important;
+  border-color: var(--matrix-border) !important;
+}
+
+.tool-card,
+#tool-interface,
+.pdf-panel {
+  border-radius: 1rem !important;
+  box-shadow: var(--matrix-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.tool-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(
+    in srgb,
+    var(--matrix-primary) 55%,
+    transparent
+  ) !important;
+  box-shadow: 0 20px 46px -28px
+    color-mix(in srgb, var(--matrix-primary) 70%, transparent);
+}
+
+.text-white,
+.text-gray-100,
+.text-gray-200,
+.text-gray-300,
+.category-header {
+  color: var(--matrix-foreground) !important;
+}
+
+.text-gray-400,
+.text-gray-500,
+.text-gray-600 {
+  color: var(--matrix-muted-foreground) !important;
+}
+
+.text-indigo-300,
+.text-indigo-400,
+.text-indigo-500,
+#tool-interface,
+.category-header:hover {
+  color: var(--matrix-primary) !important;
+}
+
+.bg-gray-700,
+.bg-gray-700\/50,
+.bg-gray-900 {
+  background-color: color-mix(
+    in srgb,
+    var(--matrix-muted) 88%,
+    transparent
+  ) !important;
+}
+
+.border-gray-600,
+.border-gray-700,
+.border-gray-800 {
+  border-color: var(--matrix-border) !important;
+}
+
+input:not([type='checkbox']):not([type='radio']):not([type='range']),
+select,
+textarea {
+  color: var(--matrix-foreground) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--matrix-card-solid) 86%,
+    transparent
+  ) !important;
+  border-color: var(--matrix-border) !important;
+  border-radius: 0.75rem !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--matrix-muted-foreground) !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--matrix-primary) !important;
+  box-shadow: 0 0 0 3px var(--matrix-ring) !important;
+  outline: none !important;
+}
+
+.bg-indigo-500,
+.bg-indigo-600,
+.cta-button,
+input[type='file']::file-selector-button {
+  background-color: var(--matrix-primary) !important;
+}
+
+.hover\:bg-indigo-700:hover,
+.hover\:bg-indigo-600:hover,
+.cta-button:hover,
+input[type='file']::file-selector-button:hover {
+  background-color: var(--matrix-primary-hover) !important;
+}
+
+.border-indigo-500,
+.hover\:border-indigo-500:hover {
+  border-color: var(--matrix-primary) !important;
+}
+
+.marker-slanted,
+.marker-text {
+  color: var(--matrix-secondary) !important;
+  background: none !important;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--matrix-muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--matrix-primary);
+}
+
+@media (max-width: 640px) {
+  .tool-matrix-embedded #tools-header {
+    margin-top: 0.75rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .tool-matrix-embedded #tool-interface {
+    padding: 1rem !important;
+  }
+}
+
 .feature-card {
   background-color: #1f2937;
   /* bg-gray-800 */
