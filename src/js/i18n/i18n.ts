@@ -52,6 +52,14 @@ export const languageNames: Record<SupportedLanguage, string> = {
 };
 
 export const getLanguageFromUrl = (): SupportedLanguage => {
+  const queryLanguage = new URLSearchParams(window.location.search).get('lang');
+  if (
+    queryLanguage &&
+    supportedLanguages.includes(queryLanguage as SupportedLanguage)
+  ) {
+    return queryLanguage as SupportedLanguage;
+  }
+
   const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
   let path = window.location.pathname;
 

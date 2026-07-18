@@ -40,6 +40,16 @@ const LANG_REGEX = new RegExp(
   `^/(${SUPPORTED_LANGUAGES.join('|')})(?:/(.*))?$`
 );
 
+function toolMatrixBootstrapPlugin(): Plugin {
+  return {
+    name: 'tool-matrix-bootstrap',
+    transformIndexHtml(html) {
+      const bootstrap = `<script>(function(){var p=new URLSearchParams(location.search);var e=window.self!==window.top||p.get('embedded')==='1';var q=p.get('theme');var s=sessionStorage.getItem('toolMatrixTheme');var t=q==='light'||q==='dark'?q:(s==='light'||s==='dark'?s:'dark');if(e)document.documentElement.classList.add('tool-matrix-embedded');document.documentElement.dataset.theme=t;document.documentElement.classList.toggle('dark',t==='dark');document.documentElement.style.colorScheme=t;sessionStorage.setItem('toolMatrixTheme',t);var l=p.get('lang')||sessionStorage.getItem('toolMatrixLanguage');if(l==='zh'||l==='en'){document.documentElement.lang=l==='zh'?'zh-CN':'en';sessionStorage.setItem('toolMatrixLanguage',l);}})();</script>`;
+      return html.replace(/<head(.*?)>/i, `<head$1>${bootstrap}`);
+    },
+  };
+}
+
 function loadPages(): Set<string> {
   const pagesDir = resolve(__dirname, 'src/pages');
   const pages = new Set<string>();
@@ -470,6 +480,7 @@ export default defineConfig(() => {
     base: (process.env.BASE_URL || '/').replace(/\/?$/, '/'),
     plugins: [
       // basicSsl(),
+      toolMatrixBootstrapPlugin(),
       handlebars({
         partialDirectory: resolve(__dirname, 'src/partials'),
         context: {
