@@ -322,33 +322,33 @@ footer a {
    Mirrors the host application's blue/cyan palette and glass surfaces while
    keeping BentoPDF's existing utility-based markup and behavior intact. */
 :root {
-  --matrix-background: #020817;
-  --matrix-foreground: #f8fafc;
-  --matrix-card: rgba(7, 20, 45, 0.82);
-  --matrix-card-solid: #07142d;
-  --matrix-muted: #17233c;
-  --matrix-muted-foreground: #94a3b8;
-  --matrix-border: rgba(96, 165, 250, 0.2);
+  --matrix-background: #151412;
+  --matrix-foreground: #f5f3ed;
+  --matrix-card: #1c1b19;
+  --matrix-card-solid: #1c1b19;
+  --matrix-muted: #292724;
+  --matrix-muted-foreground: #aaa69e;
+  --matrix-border: #38352f;
   --matrix-primary: #3b82f6;
   --matrix-primary-hover: #2563eb;
-  --matrix-secondary: #22d3ee;
+  --matrix-secondary: #ff8c70;
   --matrix-ring: rgba(59, 130, 246, 0.3);
-  --matrix-shadow: 0 18px 48px -28px rgba(37, 99, 235, 0.55);
+  --matrix-shadow: 0 14px 36px -28px rgba(0, 0, 0, 0.65);
 }
 
 :root[data-theme='light'] {
-  --matrix-background: #f8fafc;
-  --matrix-foreground: #0f172a;
-  --matrix-card: rgba(255, 255, 255, 0.86);
+  --matrix-background: #f6f4ef;
+  --matrix-foreground: #171614;
+  --matrix-card: #ffffff;
   --matrix-card-solid: #ffffff;
-  --matrix-muted: #f1f5f9;
-  --matrix-muted-foreground: #64748b;
-  --matrix-border: rgba(37, 99, 235, 0.16);
+  --matrix-muted: #efede7;
+  --matrix-muted-foreground: #6d6962;
+  --matrix-border: #dfdcd4;
   --matrix-primary: #2563eb;
   --matrix-primary-hover: #1d4ed8;
-  --matrix-secondary: #0891b2;
+  --matrix-secondary: #d95f43;
   --matrix-ring: rgba(37, 99, 235, 0.2);
-  --matrix-shadow: 0 18px 50px -32px rgba(15, 23, 42, 0.32);
+  --matrix-shadow: 0 14px 36px -28px rgba(23, 22, 20, 0.35);
 }
 
 body {
@@ -400,6 +400,13 @@ body {
   backdrop-filter: blur(14px);
 }
 
+.tool-card {
+  min-height: 178px;
+  align-items: flex-start !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+}
+
 .tool-card:hover {
   transform: translateY(-3px);
   border-color: color-mix(
@@ -408,7 +415,7 @@ body {
     transparent
   ) !important;
   box-shadow: 0 20px 46px -28px
-    color-mix(in srgb, var(--matrix-primary) 70%, transparent);
+    color-mix(in srgb, var(--matrix-secondary) 60%, transparent);
 }
 
 .text-white,
