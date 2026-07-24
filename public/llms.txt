@@ -1,0 +1,24 @@
+# BentoPDF deployment
+
+> A browser-focused PDF toolkit deployed as part of the Smart Tool Matrix collection.
+
+## Product scope
+
+- Provides PDF compression, merge, split, conversion, editing, signing, OCR and related utilities.
+- Most workflows are designed to run in the browser, but individual tools and integrations can differ.
+- Browser execution is not the same as an independent security audit.
+- Keep original files. Verify the active tool and network behavior before handling confidential, regulated or irreplaceable material.
+- Complex, encrypted, malformed or very large files may fail or produce incomplete output.
+
+## Provenance
+
+- Original BentoPDF project: https://github.com/alam00000/bentopdf
+- This deployment repository: https://github.com/xyq043170/pdf-tools
+- Smart Tool Matrix directory: https://gotoolmatrix.com/en/pdf
+- Ownership and open-source relationship: https://gotoolmatrix.com/open-source
+
+## Citation guidance
+
+Use individual tool pages for supported task and format statements. Do not infer audited privacy, guaranteed accuracy, unlimited capacity or fitness for regulated workflows.
+
+Last reviewed: 2026-07-24
