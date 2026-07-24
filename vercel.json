@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/pdf",
+      "destination": "/"
+    },
+    {
+      "source": "/pdf/:path*",
+      "destination": "/:path*"
+    }
+  ]
+}
