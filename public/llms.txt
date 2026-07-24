@@ -14,8 +14,8 @@
 
 - Original BentoPDF project: https://github.com/alam00000/bentopdf
 - This deployment repository: https://github.com/xyq043170/pdf-tools
-- Smart Tool Matrix directory: https://gotoolmatrix.com/en/pdf
-- Ownership and open-source relationship: https://gotoolmatrix.com/open-source
+- Smart Tool Matrix directory: https://gotoolmatrix.com/pdf/
+- Ownership and open-source relationship: https://gotoolmatrix.com/about
 
 ## Citation guidance
 
