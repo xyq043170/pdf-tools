@@ -420,7 +420,8 @@ const init = async () => {
       }
     });
 
-    const searchBar = document.getElementById('search-bar');
+    const searchBar = document.getElementById('search-bar') as HTMLInputElement;
+    searchBar.value = '';
     const categoryGroups = dom.toolGrid.querySelectorAll('.category-group');
 
     const searchResultsContainer = document.createElement('div');
@@ -430,7 +431,6 @@ const init = async () => {
     dom.toolGrid.insertBefore(searchResultsContainer, dom.toolGrid.firstChild);
 
     searchBar.addEventListener('input', () => {
-      // @ts-expect-error TS(2339) FIXME: Property 'value' does not exist on type 'HTMLEleme... Remove this comment to see the full error message
       const searchTerm = searchBar.value.toLowerCase().trim();
 
       if (!searchTerm) {

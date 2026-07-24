@@ -444,7 +444,14 @@ async function applyBatesNumbers() {
   try {
     const template = (
       document.getElementById('bates-template') as HTMLInputElement
-    ).value;
+    ).value.trim();
+    if (!template) {
+      showAlert(
+        'Bates Style Required',
+        'Enter a numbering style, for example [BATES].'
+      );
+      return;
+    }
     const padding = getActivePadding();
     const batesStart =
       parseInt(

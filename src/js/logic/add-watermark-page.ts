@@ -627,7 +627,7 @@ function updateWatermarkOverlay() {
 
     const text =
       (document.getElementById('watermark-text') as HTMLInputElement)?.value ||
-      'CONFIDENTIAL';
+      '';
     const fontSizePdf =
       parseInt(
         (document.getElementById('font-size') as HTMLInputElement)?.value

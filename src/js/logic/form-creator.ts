@@ -450,7 +450,7 @@ function createField(type: FormField['type'], x: number, y: number): void {
     hideBorder: false,
     transparentBackground: false,
     barcodeFormat: type === 'barcode' ? 'qrcode' : undefined,
-    barcodeValue: type === 'barcode' ? 'https://example.com' : undefined,
+    barcodeValue: type === 'barcode' ? '' : undefined,
   };
 
   fields.push(field);
@@ -2038,16 +2038,6 @@ function showProperties(field: FormField): void {
       'propBarcodeValue'
     ) as HTMLInputElement;
 
-    const barcodeSampleValues: Record<string, string> = {
-      qrcode: 'https://example.com',
-      code128: 'ABC-123',
-      code39: 'ABC123',
-      ean13: '590123412345',
-      upca: '01234567890',
-      datamatrix: 'https://example.com',
-      pdf417: 'https://example.com',
-    };
-
     const barcodeFormatHints: Record<string, string> = {
       qrcode: 'Any text, URL, or data',
       code128: 'ASCII characters (letters, numbers, symbols)',
@@ -2067,8 +2057,11 @@ function showProperties(field: FormField): void {
       propBarcodeFormat.addEventListener('change', (e) => {
         const newFormat = (e.target as HTMLSelectElement).value;
         field.barcodeFormat = newFormat;
-        field.barcodeValue = barcodeSampleValues[newFormat] || 'hello';
-        if (propBarcodeValue) propBarcodeValue.value = field.barcodeValue;
+        field.barcodeValue = '';
+        if (propBarcodeValue) {
+          propBarcodeValue.value = '';
+          propBarcodeValue.placeholder = barcodeFormatHints[newFormat] || '';
+        }
         if (hintEl) hintEl.textContent = barcodeFormatHints[newFormat] || '';
         renderField(field);
       });
