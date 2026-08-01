@@ -7,10 +7,10 @@ const __dirname = path.dirname(__filename);
 
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const LOCALES_DIR = path.resolve(__dirname, '../public/locales');
-const SITE_URL = (process.env.SITE_URL || 'https://www.bentopdf.com').replace(
-  /\/+$/,
-  ''
-);
+const SITE_URL = (
+  process.env.SITE_URL || 'https://www.gotoolmatrix.com'
+).replace(/\/+$/, '');
+const BASE_PATH = (process.env.BASE_URL || '/pdf/').replace(/^\/+|\/+$/g, '');
 const EXCLUDED_PAGES = new Set(['404', 'wasm-settings']);
 
 const languages = fs.readdirSync(LOCALES_DIR).filter((file) => {
@@ -49,10 +49,11 @@ function getPriority(pageName) {
 
 function buildUrl(lang, pageName) {
   const pagePath = pageName === 'index' ? '' : pageName;
+  const root = BASE_PATH ? `${SITE_URL}/${BASE_PATH}` : SITE_URL;
   if (lang === 'en') {
-    return pagePath ? `${SITE_URL}/${pagePath}` : SITE_URL;
+    return pagePath ? `${root}/${pagePath}` : root;
   }
-  return pagePath ? `${SITE_URL}/${lang}/${pagePath}` : `${SITE_URL}/${lang}`;
+  return pagePath ? `${root}/${lang}/${pagePath}` : `${root}/${lang}`;
 }
 
 function generateSitemap() {

@@ -7,10 +7,10 @@ const __dirname = path.dirname(__filename);
 
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const LOCALES_DIR = path.resolve(__dirname, '../public/locales');
-const SITE_URL = (process.env.SITE_URL || 'https://www.bentopdf.com').replace(
-  /\/+$/,
-  ''
-);
+const SITE_URL = (
+  process.env.SITE_URL || 'https://www.gotoolmatrix.com'
+).replace(/\/+$/, '');
+const BASE_PATH = (process.env.BASE_URL || '/pdf/').replace(/^\/+|\/+$/g, '');
 const HOST = new URL(SITE_URL).hostname;
 
 const NOINDEX_ALLOWLIST = new Set(['404.html', 'wasm-settings.html']);
@@ -72,6 +72,8 @@ function expectedCanonicalForFile(rel) {
   const baseName = fileName.replace(/\.html$/, '');
   const slug = baseName === 'index' ? '' : baseName;
   const segments = [SITE_URL];
+  if (BASE_PATH) segments.push(BASE_PATH);
+  segments.push(...parts);
   if (slug) segments.push(slug);
   return segments.join('/').replace(/\/+$/, '') || SITE_URL;
 }
@@ -98,6 +100,12 @@ function auditHtml(file) {
     );
   } else {
     const actual = canonicals[0];
+    if (/bentopdf\.com/i.test(actual)) {
+      fail(
+        'canonical',
+        `${file.rel}: canonical still points to the upstream BentoPDF site`
+      );
+    }
     if (file.rel !== '404.html' && actual.endsWith('.html')) {
       fail(
         'canonical',

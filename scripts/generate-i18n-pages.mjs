@@ -8,11 +8,11 @@ const __dirname = path.dirname(__filename);
 
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const LOCALES_DIR = path.resolve(__dirname, '../public/locales');
-const SITE_URL = (process.env.SITE_URL || 'https://www.bentopdf.com').replace(
-  /\/+$/,
-  ''
-);
-const BASE_PATH = (process.env.BASE_URL || '/').replace(/\/$/, '');
+const SITE_URL = (
+  process.env.SITE_URL || 'https://www.gotoolmatrix.com'
+).replace(/\/+$/, '');
+const BASE_PATH = (process.env.BASE_URL || '/pdf/').replace(/\/$/, '');
+const BRAND_NAME = 'Smart Tool Matrix';
 
 const languages = fs.readdirSync(LOCALES_DIR).filter((file) => {
   return fs.statSync(path.join(LOCALES_DIR, file)).isDirectory();
@@ -80,15 +80,10 @@ function injectOrganizationLd(document) {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'BentoPDF',
-    url: SITE_URL,
-    logo: `${SITE_URL}/images/favicon.svg`,
-    sameAs: [
-      'https://github.com/alam00000/bentopdf',
-      'https://x.com/BentoPDF',
-      'https://www.linkedin.com/company/bentopdf/',
-      'https://www.instagram.com/thebentopdf/',
-    ],
+    name: BRAND_NAME,
+    url: buildUrl('', ''),
+    logo: buildUrl('', 'images/favicon.svg'),
+    sameAs: ['https://github.com/xyq043170/pdf-tools'],
   };
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
@@ -114,7 +109,7 @@ function injectToolBreadcrumb(document, lang, toolName, toolUrl) {
   const homeLink = document.createElement('a');
   homeLink.href = homeUrl;
   homeLink.className = 'hover:text-indigo-300';
-  homeLink.textContent = 'BentoPDF';
+  homeLink.textContent = BRAND_NAME;
 
   const sep = document.createElement('span');
   sep.setAttribute('aria-hidden', 'true');
@@ -139,7 +134,7 @@ function injectToolBreadcrumb(document, lang, toolName, toolUrl) {
       {
         '@type': 'ListItem',
         position: 1,
-        name: 'BentoPDF',
+        name: BRAND_NAME,
         item: homeUrl,
       },
       {
@@ -163,6 +158,26 @@ function resolveToolName(translationKey, langTools) {
   if (langEntry && langEntry.name) return langEntry.name;
   const enEntry = ENGLISH_TOOLS[translationKey];
   return enEntry && enEntry.name ? enEntry.name : null;
+}
+
+function applySiteBrandMetadata(document) {
+  const replaceBrand = (value) =>
+    value ? value.replace(/BentoPDF/gi, BRAND_NAME) : value;
+
+  if (document.title) document.title = replaceBrand(document.title);
+
+  const brandedMetaSelectors = [
+    'meta[name="title"]',
+    'meta[name="author"]',
+    'meta[property="og:title"]',
+    'meta[property="og:site_name"]',
+    'meta[name="twitter:title"]',
+    'meta[name="apple-mobile-web-app-title"]',
+  ];
+  for (const selector of brandedMetaSelectors) {
+    const node = document.querySelector(selector);
+    if (node?.content) node.content = replaceBrand(node.content);
+  }
 }
 
 function processFileForLanguage(
@@ -192,7 +207,7 @@ function processFileForLanguage(
     title =
       tools[translationKey].pageTitle ||
       (tools[translationKey].name
-        ? `${tools[translationKey].name} - BentoPDF`
+        ? `${tools[translationKey].name} | ${BRAND_NAME}`
         : null);
     description = tools[translationKey].subtitle;
   }
@@ -220,6 +235,8 @@ function processFileForLanguage(
     if (metaTwitterDesc) metaTwitterDesc.content = description;
   }
 
+  applySiteBrandMetadata(document);
+
   document
     .querySelectorAll('link[rel="alternate"][hreflang]')
     .forEach((el) => el.remove());
@@ -241,7 +258,7 @@ function processFileForLanguage(
   document.head.appendChild(defaultLink);
 
   const localizedUrl = buildUrl(lang, pagePath);
-  const canonicalUrl = buildUrl('', pagePath);
+  const canonicalUrl = localizedUrl;
   let canonical = document.querySelector('link[rel="canonical"]');
   if (!canonical) {
     canonical = document.createElement('link');
@@ -311,6 +328,8 @@ function updateEnglishFile(filePath, originalContent) {
   const filenameNoExt = path.basename(filePath, '.html');
   const dom = new JSDOM(originalContent);
   const document = dom.window.document;
+
+  applySiteBrandMetadata(document);
 
   document
     .querySelectorAll('link[rel="alternate"][hreflang]')

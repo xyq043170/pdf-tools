@@ -1,3 +1,54 @@
+# Smart Tool Matrix PDF Tools（二次开发版）
+
+本仓库是 [BentoPDF](https://github.com/alam00000/bentopdf) 的公开二次开发与部署版本，服务于
+[Smart Tool Matrix](https://www.gotoolmatrix.com/) 的 `/pdf/` 工具入口。PDF 处理引擎、主要工具能力和原始设计来自
+BentoPDF；本仓库没有把上游能力重新声明为自研。
+
+## 本仓库相对上游的改动
+
+### 功能与缺陷修复
+
+- 清除了水印、Bates 编号和表单条码工具中的示例默认值，避免用户未输入内容时误把
+  `CONFIDENTIAL`、示例网址或编号模板写入真实文件。
+- Bates 编号在模板为空时会中止处理并给出明确提示，不再生成含糊或意外的编号结果。
+- 条码格式切换后清空旧示例值，仅保留格式提示，避免 QR、Code 128、EAN 等格式之间残留不兼容数据。
+- 新增 `src/tests/empty-user-inputs.test.ts`，覆盖空水印、空 Bates 模板和空条码值等回归场景。
+
+### 主站集成与 UI
+
+- 增加 Smart Tool Matrix 视觉主题，包括卡片、按钮、导航、背景和嵌入状态样式。
+- 支持主站传入 `theme=dark|light` 与 `lang=zh|en`，并在嵌入式访问时同步深浅主题和语言。
+- 支持部署在 `/pdf/` 子路径，修复 Vite 资源、WASM、页面跳转和 Vercel 重写在子路径下失效的问题。
+- 保留直接访问模式，同时针对从主站进入的嵌入场景简化导航和品牌呈现。
+
+### SEO / GEO 与来源透明度
+
+- 补充 canonical、Open Graph、描述信息、`robots.txt`、sitemap 和 `llms.txt`。
+- 明确区分 BentoPDF 上游项目、当前部署仓库和 Smart Tool Matrix 目录之间的关系。
+- 对“浏览器端处理”“隐私优先”等描述增加适用边界；这些描述不是独立安全审计。
+
+## 二次开发边界
+
+- 本仓库没有重写 BentoPDF 的核心 PDF 引擎，也不声称原创 PyMuPDF、Ghostscript、CPDF、pdf-lib 等组件。
+- 上游文档中的工具数量、性能、隐私和兼容性描述属于 BentoPDF；当前部署结果应以实际页面和测试为准。
+- 当前仓库保留上游 AGPL-3.0 许可证和原作者署名。下面保留 BentoPDF 的原始说明，便于查阅上游功能与开发方式。
+
+## 维护与验证
+
+```bash
+npm install
+npm run test:run
+npm run build
+```
+
+- 部署源码：<https://github.com/xyq043170/pdf-tools>
+- 上游源码：<https://github.com/alam00000/bentopdf>
+- 问题反馈：<https://github.com/xyq043170/pdf-tools/issues>
+
+---
+
+## 上游 BentoPDF README
+
 <p align="center"><img src="public/images/favicon-no-bg.svg" width="80"></p>
 <h1 align="center">BentoPDF</h1>
 <p align="center">

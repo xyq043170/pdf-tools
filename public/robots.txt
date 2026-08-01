@@ -1,12 +1,12 @@
 # BentoPDF Robots.txt
-# https://www.bentopdf.com
+# https://www.gotoolmatrix.com/pdf/
 
 # Allow all crawlers
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://www.bentopdf.com/sitemap.xml
+Sitemap: https://www.gotoolmatrix.com/pdf/sitemap.xml
 
 # Disallow internal/system paths
 Disallow: /api/
