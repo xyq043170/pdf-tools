@@ -80,6 +80,22 @@ function expectedCanonicalForFile(rel) {
 
 function auditHtml(file) {
   const html = fs.readFileSync(file.full, 'utf-8');
+
+  if (file.rel === 'index.html') {
+    const mainSiteReturn = html.match(
+      /<a[^>]+class=["'][^"']*\bmatrix-main-return\b[^"']*["'][^>]+href=["']([^"']+)["'][^>]*>/i
+    );
+    if (
+      !mainSiteReturn ||
+      mainSiteReturn[1] !== 'https://www.gotoolmatrix.com/'
+    ) {
+      fail(
+        'main-site-return',
+        'index.html: missing visible return link to https://www.gotoolmatrix.com/'
+      );
+    }
+  }
+
   const titles = findAll(html, /<title[^>]*>[\s\S]*?<\/title>/g);
   if (titles.length === 0) {
     fail('title', `${file.rel}: no <title>`);
