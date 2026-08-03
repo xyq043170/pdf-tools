@@ -376,6 +376,93 @@ body {
   display: none !important;
 }
 
+.matrix-brand-bar {
+  height: 64px;
+  border-color: var(--matrix-border) !important;
+  background: color-mix(
+    in srgb,
+    var(--matrix-background) 86%,
+    transparent
+  ) !important;
+  backdrop-filter: blur(18px);
+}
+
+.matrix-brand-section {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--matrix-border);
+  border-radius: 999px;
+  color: var(--matrix-muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.matrix-brand-home {
+  margin-left: auto;
+  color: var(--matrix-muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+
+.matrix-brand-home:hover {
+  color: var(--matrix-primary);
+}
+
+.matrix-main-return {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid
+    color-mix(in srgb, var(--matrix-primary) 48%, var(--matrix-border));
+  border-radius: 0.7rem;
+  color: var(--matrix-primary);
+  background: color-mix(in srgb, var(--matrix-primary) 10%, transparent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.matrix-main-return:hover {
+  border-color: var(--matrix-primary);
+  background: color-mix(in srgb, var(--matrix-primary) 16%, transparent);
+}
+
+.matrix-main-return__zh {
+  display: none;
+}
+html[lang^='zh'] .matrix-main-return__en {
+  display: none;
+}
+html[lang^='zh'] .matrix-main-return__zh {
+  display: inline;
+}
+
+@media (max-width: 640px) {
+  .matrix-brand-section {
+    display: none;
+  }
+  .matrix-main-return__en {
+    font-size: 0;
+  }
+  .matrix-main-return__en::after {
+    content: 'Main';
+    font-size: 0.8rem;
+  }
+  html[lang^='zh'] .matrix-main-return__zh {
+    font-size: 0;
+  }
+  html[lang^='zh'] .matrix-main-return__zh::after {
+    content: '主站';
+    font-size: 0.8rem;
+  }
+}
+
 .tool-matrix-embedded body > .container,
 .tool-matrix-embedded #app {
   padding-top: 1.25rem !important;

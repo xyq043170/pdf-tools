@@ -17,6 +17,8 @@ BentoPDF；本仓库没有把上游能力重新声明为自研。
 ### 主站集成与 UI
 
 - 增加 Smart Tool Matrix 视觉主题，包括卡片、按钮、导航、背景和嵌入状态样式。
+- 直接访问页面采用统一的 64px Smart Tool Matrix 品牌栏、PDF Tools 分区标识、半透明背景和返回工具箱入口；嵌入模式隐藏重复品牌栏。
+- 与图片、开发者和网站检测子站统一暖灰背景、蓝色主操作色、边框层级和 16px 卡片圆角，PDF 工具保留珊瑚色作为辅助强调色。
 - 支持主站传入 `theme=dark|light` 与 `lang=zh|en`，并在嵌入式访问时同步深浅主题和语言。
 - 支持部署在 `/pdf/` 子路径，修复 Vite 资源、WASM、页面跳转和 Vercel 重写在子路径下失效的问题。
 - 保留直接访问模式，同时针对从主站进入的嵌入场景简化导航和品牌呈现。
@@ -24,6 +26,8 @@ BentoPDF；本仓库没有把上游能力重新声明为自研。
 ### SEO / GEO 与来源透明度
 
 - 补充 canonical、Open Graph、描述信息、`robots.txt`、sitemap 和 `llms.txt`。
+- canonical、sitemap、robots、OG 和结构化数据默认归属 `https://www.gotoolmatrix.com/pdf/`；本地化页面使用自引用 canonical 和 hreflang。
+- 页面标题、分享元数据和部署级结构化数据使用 Smart Tool Matrix 品牌，同时保留 BentoPDF 上游来源、许可证和作者归属。
 - 明确区分 BentoPDF 上游项目、当前部署仓库和 Smart Tool Matrix 目录之间的关系。
 - 对“浏览器端处理”“隐私优先”等描述增加适用边界；这些描述不是独立安全审计。
 
