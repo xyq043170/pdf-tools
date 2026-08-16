@@ -100,7 +100,7 @@ jobs:
 
       - name: Build and push amd64 ${{ matrix.mode.name }} (release)
         if: steps.version.outputs.is_release == 'true'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           push: true
           build-args: |
@@ -113,7 +113,7 @@ jobs:
 
       - name: Build and push amd64 ${{ matrix.mode.name }} (edge)
         if: steps.version.outputs.is_release == 'false'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           push: true
           build-args: |
@@ -169,7 +169,7 @@ jobs:
 
       - name: Build and push arm64 ${{ matrix.mode.name }} (release)
         if: steps.version.outputs.is_release == 'true'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           push: true
           build-args: |
@@ -182,7 +182,7 @@ jobs:
 
       - name: Build and push arm64 ${{ matrix.mode.name }} (edge)
         if: steps.version.outputs.is_release == 'false'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           push: true
           build-args: |
