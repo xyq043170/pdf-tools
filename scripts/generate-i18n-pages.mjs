@@ -59,7 +59,8 @@ function buildUrl(langPrefix, pagePath) {
   if (BASE_PATH && BASE_PATH !== '') parts.push(BASE_PATH.replace(/^\//, ''));
   if (langPrefix) parts.push(langPrefix);
   if (pagePath) parts.push(pagePath.replace(/^\//, ''));
-  return parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
+  const url = parts.filter(Boolean).join('/').replace(/\/+$/, '') || SITE_URL;
+  return pagePath ? url : `${url}/`;
 }
 
 const ORGANIZATION_LD_MARKER = 'data-bentopdf-organization';

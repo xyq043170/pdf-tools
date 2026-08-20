@@ -75,7 +75,8 @@ function expectedCanonicalForFile(rel) {
   if (BASE_PATH) segments.push(BASE_PATH);
   segments.push(...parts);
   if (slug) segments.push(slug);
-  return segments.join('/').replace(/\/+$/, '') || SITE_URL;
+  const url = segments.join('/').replace(/\/+$/, '') || SITE_URL;
+  return slug ? url : `${url}/`;
 }
 
 function auditHtml(file) {
@@ -144,7 +145,7 @@ function auditHtml(file) {
     }
     if (file.rel !== '404.html') {
       const expected = expectedCanonicalForFile(file.rel);
-      if (actual.replace(/\/+$/, '') !== expected.replace(/\/+$/, '')) {
+      if (actual !== expected) {
         fail(
           'canonical',
           `${file.rel}: canonical "${actual}" != expected "${expected}"`
@@ -245,6 +246,21 @@ function auditSitemap() {
     } catch {
       fail('sitemap', `sitemap URL is not valid: ${loc}`);
     }
+  }
+
+  const expectedRoot = BASE_PATH ? `${SITE_URL}/${BASE_PATH}/` : `${SITE_URL}/`;
+  const legacyRoot = expectedRoot.replace(/\/$/, '');
+  if (!locs.includes(expectedRoot)) {
+    fail(
+      'sitemap',
+      `sitemap is missing canonical collection root: ${expectedRoot}`
+    );
+  }
+  if (locs.includes(legacyRoot)) {
+    fail(
+      'sitemap',
+      `sitemap contains non-canonical collection root: ${legacyRoot}`
+    );
   }
 
   const expectedLocales = fs

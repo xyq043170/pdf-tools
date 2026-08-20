@@ -51,9 +51,9 @@ function buildUrl(lang, pageName) {
   const pagePath = pageName === 'index' ? '' : pageName;
   const root = BASE_PATH ? `${SITE_URL}/${BASE_PATH}` : SITE_URL;
   if (lang === 'en') {
-    return pagePath ? `${root}/${pagePath}` : root;
+    return pagePath ? `${root}/${pagePath}` : `${root}/`;
   }
-  return pagePath ? `${root}/${lang}/${pagePath}` : `${root}/${lang}`;
+  return pagePath ? `${root}/${lang}/${pagePath}` : `${root}/${lang}/`;
 }
 
 function generateSitemap() {
