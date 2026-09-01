@@ -13,6 +13,7 @@ import { showWasmRequiredDialog } from '../utils/wasm-provider.js';
 import { loadPyMuPDF, isPyMuPDFAvailable } from '../utils/pymupdf-loader.js';
 import * as pdfjsLib from 'pdfjs-dist';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
+import { postEmbeddedAnalyticsEvent } from '../utils/embedded-analytics.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -466,6 +467,15 @@ document.addEventListener('DOMContentLoaded', () => {
           savings > 0 ? ((savings / originalFile.size) * 100).toFixed(1) : 0;
 
         downloadFile(resultBlob, originalFile.name);
+        const outputUnderTarget = resultSize <= 2 * 1024 * 1024;
+        postEmbeddedAnalyticsEvent('process_success', {
+          file_count: 1,
+          output_under_target: outputUnderTarget,
+        });
+        postEmbeddedAnalyticsEvent('download_success', {
+          file_count: 1,
+          output_under_target: outputUnderTarget,
+        });
 
         hideLoader();
 
@@ -490,6 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const zip = new JSZip();
         let totalOriginalSize = 0;
         let totalCompressedSize = 0;
+        let allOutputsUnderTarget = true;
 
         for (let i = 0; i < state.files.length; i++) {
           const file = state.files[i];
@@ -520,6 +531,8 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           totalCompressedSize += resultBytes.length;
+          allOutputsUnderTarget =
+            allOutputsUnderTarget && resultBytes.length <= 2 * 1024 * 1024;
           zip.file(file.name, resultBytes);
         }
 
@@ -531,6 +544,14 @@ document.addEventListener('DOMContentLoaded', () => {
             : 0;
 
         downloadFile(zipBlob, 'compressed-pdfs.zip');
+        postEmbeddedAnalyticsEvent('process_success', {
+          file_count: state.files.length,
+          output_under_target: allOutputsUnderTarget,
+        });
+        postEmbeddedAnalyticsEvent('download_success', {
+          file_count: state.files.length,
+          output_under_target: allOutputsUnderTarget,
+        });
 
         hideLoader();
 
@@ -563,6 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleFileSelect = (files: FileList | null) => {
     if (files && files.length > 0) {
       state.files = [...state.files, ...Array.from(files)];
+      postEmbeddedAnalyticsEvent('upload_start', { file_count: files.length });
       updateUI();
     }
   };
